@@ -1,0 +1,89 @@
+#include <iostream>
+#include <vector>
+#include <stdio.h>
+#include <stack>
+using namespace std;
+
+int goldenLeader(int A[], int len)
+{
+    int n = len;
+    int size = 0;
+    int value = 0;
+    for (int k = 0; k < n; ++k)
+    {
+        if (size == 0)
+        {
+            size += 1;
+            value = A[k];
+        }
+        else
+        {
+            if (value != A[k])
+                --size;
+            else
+                ++size;
+        }
+    }
+    int candidate = -1;
+    if (size > 0)
+        candidate = value;
+    else
+        return -1;
+
+    int leader = -1;
+    int count = 0;
+    for (int k = 0; k < n; ++k)
+    {
+        if (A[k] == candidate)
+            ++count;
+    }
+    if (count > n / 2)
+        leader = candidate;
+
+    return leader;
+}
+
+int goldenLeader_Cpp(vector<int> &vec)
+{
+    std::stack<int> value;
+    int n = vec.size();
+    for (int k = 0; k < n; ++k)
+    {
+        if (value.size() == 0)
+            value.push(vec[k]);
+        else
+        {
+            if (value.top() != vec[k])
+                value.pop();
+            else
+                value.push(vec[k]);
+        }
+    }
+    int candidate = -1;
+    if (value.size() > 0)
+        candidate = value.top();
+    else
+        return -1;
+
+    int leader = -1;
+    int count = 0;
+    for (int k = 0; k < n; ++k)
+    {
+        if (vec[k] == candidate)
+            ++count;
+    }
+    if (count > n / 2)
+        leader = candidate;
+
+    return leader;
+}
+
+int main()
+{
+
+    int a[] = {6, 6, 6, 6, 8, 4, 8}; // {6, 8, 4, 6, 8, 6, 6}; // {4, 6, 6, 6, 6, 8, 8}
+    std::vector<int> intVec = {6, 6, 6, 6, 8, 4, 8};
+    printf("%d", goldenLeader(a, sizeof(a) / sizeof(a[0])));
+    printf("%d", goldenLeader_Cpp(intVec));
+    return 0;
+}
