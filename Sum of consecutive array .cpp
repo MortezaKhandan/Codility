@@ -11,3 +11,18 @@
 // 1 3 4 4 5 6    21.  ===> N=6  
 
 
+// works for all series 
+// S =( n / 2) * (A[0] * A[n-1]);
+
+int calculateSum(const std::vector<int>& arr) {
+    int n = arr.size();
+    
+    // Check if the array is not empty
+    if (n == 0) {
+        return 0;  // Return 0 for an empty array
+    }
+
+    // Calculate the sum using the formula
+    return (n * (arr[0] + arr[n - 1])) / 2;
+}
+
